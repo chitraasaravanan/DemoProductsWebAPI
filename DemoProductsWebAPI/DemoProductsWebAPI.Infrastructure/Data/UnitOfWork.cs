@@ -1,10 +1,10 @@
+using DemoProductsWebAPI.Common.Interfaces;
 using DemoProductsWebAPI.Infrastructure.Data.Repositories;
-using DemoProductsWebAPI.Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoProductsWebAPI.Infrastructure.Data
 {
-    public class UnitOfWork : Application.Interfaces.IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _db;
 
@@ -17,7 +17,7 @@ namespace DemoProductsWebAPI.Infrastructure.Data
         }
 
         public IProductRepository Products { get; }
-        public Application.Interfaces.IRefreshTokenRepository RefreshTokens { get; }
+        public IRefreshTokenRepository RefreshTokens { get; }
         public IProductCartRepository ProductCarts { get; }
 
         public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

@@ -1,17 +1,12 @@
+using DemoProductsWebAPI.Common.Interfaces;
 using DemoProductsWebAPI.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using DemoProductsWebAPI.Application.Interfaces;
 
 namespace DemoProductsWebAPI.Infrastructure.Data.Repositories
 {
-    public class ProductCartRepository : IProductCartRepository
+    public class ProductCartRepository(ApplicationDbContext db) : IProductCartRepository
     {
-        private readonly ApplicationDbContext _db;
-
-        public ProductCartRepository(ApplicationDbContext db)
-        {
-            _db = db;
-        }
+        private readonly ApplicationDbContext _db = db;
 
         public async Task<List<ProductCart>> GetAllAsync(CancellationToken cancellationToken = default)
         {

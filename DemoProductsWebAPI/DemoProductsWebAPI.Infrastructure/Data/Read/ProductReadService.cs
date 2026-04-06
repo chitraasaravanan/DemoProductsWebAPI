@@ -1,8 +1,8 @@
 using Dapper;
-using System.Data;
-using DemoProductsWebAPI.Application.DTOs;
+using DemoProductsWebAPI.Common.DTOs;
+using DemoProductsWebAPI.Common.Interfaces;
 using Microsoft.Extensions.Logging;
-using DemoProductsWebAPI.Application.Interfaces;
+using System.Data;
 
 namespace DemoProductsWebAPI.Infrastructure.Data.Read
 {

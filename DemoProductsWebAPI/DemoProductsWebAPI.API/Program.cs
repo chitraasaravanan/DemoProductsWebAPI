@@ -4,6 +4,7 @@ using DemoProductsWebAPI.API.Middleware;
 using DemoProductsWebAPI.Application.Extensions;
 using DemoProductsWebAPI.Application.Services;
 using DemoProductsWebAPI.Common.Interfaces;
+using DemoProductsWebAPI.Infrastructure.Data;
 using DemoWebAPI.Core.DTOs;
 using DemoWebAPI.Core.Extensions;
 using DemoWebAPI.Core.Http;
@@ -153,7 +154,7 @@ namespace DemoProductsWebAPI.API
             builder.Services.AddScoped<IProductCartService, ProductCartService>();
             // Register read-optimized services used by query handlers
             // We rely on output caching in the API layer rather than an application-level cached read service.
-            builder.Services.AddScoped<DemoProductsWebAPI.Common.Interfaces.IProductReadService, DemoProductsWebAPI.Infrastructure.Data.Read.ProductReadService>();
+            builder.Services.AddScoped<IProductReadService, DemoProductsWebAPI.Infrastructure.Data.Read.ProductReadService>();
 
             // Token service with IOptions
             builder.Services.AddScoped<Common.Interfaces.ITokenService, Infrastructure.Services.TokenService>();

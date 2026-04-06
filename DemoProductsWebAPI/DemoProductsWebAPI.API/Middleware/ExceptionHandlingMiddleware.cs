@@ -2,6 +2,7 @@ using System;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
+using DemoWebAPI.Core.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
@@ -30,7 +31,7 @@ namespace DemoProductsWebAPI.API.Middleware
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 context.Response.ContentType = "application/json";
 
-                var payloadObj = new DemoProductsWebAPI.Common.Models.ErrorResponse { Message = "An unexpected error occurred.", Details = ex.Message };
+                var payloadObj = new ErrorResponse { Message = "An unexpected error occurred.", Details = ex.Message };
                 var payload = JsonSerializer.Serialize(payloadObj, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
                 await context.Response.WriteAsync(payload).ConfigureAwait(false);
             }

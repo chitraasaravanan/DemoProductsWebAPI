@@ -1,15 +1,13 @@
-using System;
-using Xunit;
-using FluentAssertions;
-using Moq;
-using DemoProductsWebAPI.Application.Services;
-using DemoProductsWebAPI.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
-using DemoProductsWebAPI.Application.DTOs;
-using DemoProductsWebAPI.Domain.Entities;
-using Microsoft.Extensions.Logging.Abstractions;
 using AutoMapper;
-using System.Threading;
+using DemoProductsWebAPI.Common.DTOs;
+using DemoProductsWebAPI.Application.Products.Queries;
+using DemoProductsWebAPI.Application.Services;
+using DemoProductsWebAPI.Domain.Entities;
+using DemoProductsWebAPI.Infrastructure.Data;
+using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging.Abstractions;
+using Moq;
 
 namespace DemoProductsWebAPI.Tests.UnitTestcase
 {
@@ -33,7 +31,7 @@ namespace DemoProductsWebAPI.Tests.UnitTestcase
             var logger = new NullLogger<ProductService>();
             var mediatorMock = new Mock<MediatR.IMediator>();
             mediatorMock.Setup(m => m.Send(It.IsAny<Application.Products.Commands.CreateProductCommand>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new ProductDto { Id = 1, ProductName = "Test" });
+                .Returns(System.Threading.Tasks.Task.FromResult<ProductDto>(new ProductDto { Id = 1, ProductName = "Test" }));
             var svc = new ProductService(mapperMock.Object, logger, mediatorMock.Object);
 
             var dto = new ProductDto { ProductName = "Test", CreatedBy = "unit", CreatedOn = DateTime.UtcNow };
@@ -52,10 +50,10 @@ namespace DemoProductsWebAPI.Tests.UnitTestcase
 
             var logger = new NullLogger<ProductService>();
             var mediatorMock = new Mock<MediatR.IMediator>();
-            mediatorMock.Setup(m => m.Send(It.IsAny<Application.Products.Queries.GetAllProductsQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(new List<ProductDto>
+            mediatorMock.Setup(m => m.Send(It.IsAny<GetAllProductsQuery>(), It.IsAny<CancellationToken>())).Returns(System.Threading.Tasks.Task.FromResult<System.Collections.Generic.IEnumerable<ProductDto>>(new List<ProductDto>
             {
                 new ProductDto { Id = 1, ProductName = "p1", CreatedBy = "t", CreatedOn = DateTime.UtcNow }
-            } as IEnumerable<ProductDto>);
+            }));
 
             var svc = new ProductService(mapperMock.Object, logger, mediatorMock.Object);
 
@@ -70,7 +68,7 @@ namespace DemoProductsWebAPI.Tests.UnitTestcase
             var mapperMock = new Mock<IMapper>();
             var logger = new NullLogger<ProductService>();
             var mediatorMock = new Mock<MediatR.IMediator>();
-            mediatorMock.Setup(m => m.Send(It.IsAny<Application.Products.Queries.GetProductByIdQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync((ProductDto?)null);
+            mediatorMock.Setup(m => m.Send(It.IsAny<GetProductByIdQuery>(), It.IsAny<CancellationToken>())).Returns(System.Threading.Tasks.Task.FromResult<ProductDto?>(null));
             var svc = new ProductService(mapperMock.Object, logger, mediatorMock.Object);
 
             var res = await svc.GetByIdAsync(999, CancellationToken.None);
@@ -83,7 +81,7 @@ namespace DemoProductsWebAPI.Tests.UnitTestcase
             var mapperMock = new Mock<IMapper>();
             var logger = new NullLogger<ProductService>();
             var mediatorMock = new Mock<MediatR.IMediator>();
-            mediatorMock.Setup(m => m.Send(It.IsAny<Application.Products.Commands.UpdateProductCommand>(), It.IsAny<CancellationToken>())).ReturnsAsync(false);
+            mediatorMock.Setup(m => m.Send(It.IsAny<Application.Products.Commands.UpdateProductCommand>(), It.IsAny<CancellationToken>())).Returns(System.Threading.Tasks.Task.FromResult<bool>(false));
             var svc = new ProductService(mapperMock.Object, logger, mediatorMock.Object);
 
             var dto = new ProductDto { Id = 12345, ProductName = "x" };
@@ -97,7 +95,7 @@ namespace DemoProductsWebAPI.Tests.UnitTestcase
             var mapperMock = new Mock<IMapper>();
             var logger = new NullLogger<ProductService>();
             var mediatorMock = new Mock<MediatR.IMediator>();
-            mediatorMock.Setup(m => m.Send(It.IsAny<Application.Products.Commands.DeleteProductCommand>(), It.IsAny<CancellationToken>())).ReturnsAsync(false);
+            mediatorMock.Setup(m => m.Send(It.IsAny<Application.Products.Commands.DeleteProductCommand>(), It.IsAny<CancellationToken>())).Returns(System.Threading.Tasks.Task.FromResult<bool>(false));
             var svc = new ProductService(mapperMock.Object, logger, mediatorMock.Object);
 
             var res = await svc.DeleteAsync(999, CancellationToken.None);

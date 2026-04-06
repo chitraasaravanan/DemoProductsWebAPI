@@ -5,10 +5,10 @@ using Xunit;
 using Moq;
 using FluentAssertions;
 using DemoProductsWebAPI.Application.Products.Handlers;
-using DemoProductsWebAPI.Application.DTOs;
 using System.Threading;
 using System.Collections.Generic;
 using DemoProductsWebAPI.Common.Interfaces;
+using DemoProductsWebAPI.Common.DTOs;
 
 namespace DemoProductsWebAPI.Tests.UnitTestcase
 {
@@ -18,10 +18,10 @@ namespace DemoProductsWebAPI.Tests.UnitTestcase
         public async System.Threading.Tasks.Task ProductQueryHandler_GetAll_ReturnsList()
         {
             var mockRead = new Mock<IProductReadService>();
-            mockRead.Setup(m => m.GetAllAsync(It.IsAny<CancellationToken>())).ReturnsAsync(new List<ProductDto>
+            mockRead.Setup(m => m.GetAllAsync(It.IsAny<CancellationToken>())).Returns(System.Threading.Tasks.Task.FromResult<System.Collections.Generic.IEnumerable<ProductDto>>(new List<ProductDto>
             {
                 new ProductDto { Id = 1, ProductName = "P1", CreatedBy = "t", CreatedOn = DateTime.UtcNow }
-            });
+            }));
 
             var handler = new ProductQueryHandler(mockRead.Object);
             var result = await handler.Handle(new Application.Products.Queries.GetAllProductsQuery(), CancellationToken.None);
@@ -50,7 +50,7 @@ namespace DemoProductsWebAPI.Tests.UnitTestcase
             mediatorMock.Setup(m => m.Publish(It.IsAny<MediatR.INotification>(), It.IsAny<CancellationToken>())).Returns(System.Threading.Tasks.Task.CompletedTask);
 
             var handler = new ProductCommandHandler(uow, mapperMock.Object, logger, mediatorMock.Object);
-            var dto = new ProductDto { ProductName = "New", CreatedBy = "t", CreatedOn = DateTime.UtcNow };
+            var dto = new DemoProductsWebAPI.Common.DTOs.ProductDto { ProductName = "New", CreatedBy = "t", CreatedOn = DateTime.UtcNow };
 
             // act
             var result = await handler.Handle(new Application.Products.Commands.CreateProductCommand(dto), CancellationToken.None);

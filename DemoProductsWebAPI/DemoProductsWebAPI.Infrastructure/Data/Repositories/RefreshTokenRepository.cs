@@ -1,6 +1,6 @@
+using DemoProductsWebAPI.Common.Interfaces;
 using DemoProductsWebAPI.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using DemoProductsWebAPI.Application.Interfaces;
 
 namespace DemoProductsWebAPI.Infrastructure.Data.Repositories
 {
