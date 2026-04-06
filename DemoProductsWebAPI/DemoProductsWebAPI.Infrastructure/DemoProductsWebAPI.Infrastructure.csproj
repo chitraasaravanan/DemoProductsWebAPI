@@ -24,7 +24,4 @@
     <ProjectReference Include="..\DemoProductsWebAPI.Common\DemoProductsWebAPI.Common.csproj" />
     <ProjectReference Include="..\DemoWebAPI.Core\DemoWebAPI.Core.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
 </Project>

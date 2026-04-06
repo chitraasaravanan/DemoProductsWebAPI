@@ -5,6 +5,7 @@ using DemoProductsWebAPI.Application.Extensions;
 using DemoProductsWebAPI.Application.Services;
 using DemoProductsWebAPI.Common.Interfaces;
 using DemoProductsWebAPI.Infrastructure.Data;
+using DemoProductsWebAPI.Infrastructure.Extensions;
 using DemoWebAPI.Core.DTOs;
 using DemoWebAPI.Core.Extensions;
 using DemoWebAPI.Core.Http;
@@ -54,9 +55,6 @@ namespace DemoProductsWebAPI.API
                     poolSize: 8);
             }
 
-            // Dapper read DB connection factory
-            builder.Services.AddSingleton<Infrastructure.Data.Read.IDbConnectionFactory, Infrastructure.Data.Read.SqlConnectionFactory>();
-
             // Redis cache for read queries
             var redisConn = builder.Configuration.GetConnectionString("RedisConnection");
             if (!string.IsNullOrEmpty(redisConn))
@@ -93,8 +91,10 @@ namespace DemoProductsWebAPI.API
                 }
             });
 
-            // Repositories & Unit of Work (application-level abstractions)
-            // Infrastructure services are registered via the Application layer to avoid direct project reference from API.
+            // Repositories & Unit of Work - register infrastructure services
+            builder.Services.AddInfrastructureServices(builder.Configuration);
+
+            // Register application services
             builder.Services.AddApplicationServices(builder.Configuration);
 
             // AutoMapper (will scan assemblies for profiles)
@@ -149,12 +149,7 @@ namespace DemoProductsWebAPI.API
             // Example typed client registration via common factory
             TypedHttpClientFactory.RegisterTypedClient(builder.Services, "ProductService", builder.Configuration.GetValue<string>("ExternalServices:ProductServiceBaseUrl"));
 
-            // Application services
-            builder.Services.AddScoped<IProductService, ProductService>();
-            builder.Services.AddScoped<IProductCartService, ProductCartService>();
-            // Register read-optimized services used by query handlers
-            // We rely on output caching in the API layer rather than an application-level cached read service.
-            builder.Services.AddScoped<IProductReadService, DemoProductsWebAPI.Infrastructure.Data.Read.ProductReadService>();
+            // Application and infrastructure services are registered in AddApplicationServices and AddInfrastructureServices above
 
             // Token service with IOptions
             builder.Services.AddScoped<Common.Interfaces.ITokenService, Infrastructure.Services.TokenService>();
