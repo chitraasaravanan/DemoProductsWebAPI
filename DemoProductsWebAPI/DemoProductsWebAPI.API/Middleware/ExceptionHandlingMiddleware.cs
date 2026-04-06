@@ -8,6 +8,9 @@ using Microsoft.Extensions.Logging;
 
 namespace DemoProductsWebAPI.API.Middleware
 {
+    /// <summary>
+    /// Global exception handling middleware that catches unhandled exceptions and returns standardized error responses.
+    /// </summary>
     public class ExceptionHandlingMiddleware
     {
         private readonly RequestDelegate _next;
@@ -19,6 +22,11 @@ namespace DemoProductsWebAPI.API.Middleware
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
+        /// <summary>
+        /// Invokes the middleware and handles any unhandled exceptions.
+        /// </summary>
+        /// <param name="context">The HTTP context.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public async Task InvokeAsync(HttpContext context)
         {
             try

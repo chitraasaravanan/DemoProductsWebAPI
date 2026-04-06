@@ -4,7 +4,7 @@ using MediatR;
 
 namespace DemoProductsWebAPI.API.Controllers
 {    
-    public class ProductCartsController(IMediator mediator) : BaseController
+    public class ProductCartsController(IMediator mediator) : Controllers.BaseController
     {
         private readonly IMediator _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 

@@ -8,8 +8,17 @@ using DemoWebAPI.Core.Http;
 
 namespace DemoWebAPI.Core.Extensions
 {
+    /// <summary>
+    /// Common service collection extension methods for cross-cutting concerns.
+    /// </summary>
     public static class ServiceCollectionExtensions
     {
+        /// <summary>
+        /// Adds resilience policies (retry and circuit breaker) for HTTP operations.
+        /// </summary>
+        /// <param name="services">The service collection.</param>
+        /// <param name="configuration">The application configuration.</param>
+        /// <returns>The service collection for chaining.</returns>
         public static IServiceCollection AddCommonResilience(this IServiceCollection services, IConfiguration configuration)
         {
             var retryPolicy = HttpPolicyExtensions

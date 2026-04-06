@@ -1,18 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using DemoProductsWebAPI.Common.DTOs;
-using Microsoft.AspNetCore.Mvc;
 using DemoProductsWebAPI.Common.Interfaces;
 using MediatR;
 
 namespace DemoProductsWebAPI.API.Controllers
 {
-    [ApiController]
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
     /// <summary>
     /// Controller that manages product resources.
-    /// </summary>
-    [Produces("application/json")]
+    /// </summary>   
     public class ProductsController(IMediator mediator) : BaseController
     {
         private readonly IMediator _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
