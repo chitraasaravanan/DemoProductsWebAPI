@@ -1,7 +1,7 @@
 using Xunit;
 using Moq;
 using DemoProductsWebAPI.API.Controllers;
-using DemoProductsWebAPI.Application.Interfaces;
+using DemoProductsWebAPI.Common.Interfaces;
 using DemoProductsWebAPI.Application.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using FluentAssertions;

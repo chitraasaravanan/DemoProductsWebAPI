@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
@@ -21,6 +21,10 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DemoProductsWebAPI.Domain\DemoProductsWebAPI.Domain.csproj" />
+    <ProjectReference Include="..\DemoProductsWebAPI.Common\DemoProductsWebAPI.Common.csproj" />
     <ProjectReference Include="..\DemoWebAPI.Core\DemoWebAPI.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Extensions\" />
   </ItemGroup>
 </Project>

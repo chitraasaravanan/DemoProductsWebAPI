@@ -1,5 +1,5 @@
-using DemoProductsWebAPI.Application.Interfaces;
-using DemoProductsWebAPI.Application.DTOs;
+using DemoProductsWebAPI.Common.Interfaces;
+using DemoProductsWebAPI.Common.DTOs;
 using AutoMapper;
 using DemoProductsWebAPI.Domain.Entities;
 using Microsoft.Extensions.Logging;

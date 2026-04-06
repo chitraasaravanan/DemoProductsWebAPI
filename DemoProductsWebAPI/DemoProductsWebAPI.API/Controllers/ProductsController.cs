@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using DemoProductsWebAPI.Application.DTOs;
+using DemoProductsWebAPI.Common.DTOs;
 using Microsoft.AspNetCore.Mvc;
-using DemoProductsWebAPI.Application.Interfaces;
+using DemoProductsWebAPI.Common.Interfaces;
 using MediatR;
 
 namespace DemoProductsWebAPI.API.Controllers

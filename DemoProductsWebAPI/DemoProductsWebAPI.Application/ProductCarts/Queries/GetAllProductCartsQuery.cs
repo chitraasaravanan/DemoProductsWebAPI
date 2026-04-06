@@ -1,5 +1,5 @@
 using MediatR;
-using DemoProductsWebAPI.Application.DTOs;
+using DemoProductsWebAPI.Common.DTOs;
 using System.Collections.Generic;
 
 namespace DemoProductsWebAPI.Application.ProductCarts.Queries

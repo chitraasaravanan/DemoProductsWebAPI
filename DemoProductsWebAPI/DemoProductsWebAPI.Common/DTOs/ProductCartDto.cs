@@ -1,4 +1,4 @@
-namespace DemoProductsWebAPI.Application.DTOs
+namespace DemoProductsWebAPI.Common.DTOs
 {
     public class ProductCartDto
     {

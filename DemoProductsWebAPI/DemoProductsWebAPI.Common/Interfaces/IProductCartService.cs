@@ -1,4 +1,4 @@
-using DemoProductsWebAPI.Application.DTOs;
+using DemoProductsWebAPI.Common.DTOs;
 
 namespace DemoProductsWebAPI.Common.Interfaces
 {

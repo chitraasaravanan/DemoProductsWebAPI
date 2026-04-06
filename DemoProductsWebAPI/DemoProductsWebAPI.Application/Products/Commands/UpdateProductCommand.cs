@@ -1,4 +1,4 @@
-using DemoProductsWebAPI.Application.DTOs;
+using DemoProductsWebAPI.Common.DTOs;
 using MediatR;
 
 namespace DemoProductsWebAPI.Application.Products.Commands

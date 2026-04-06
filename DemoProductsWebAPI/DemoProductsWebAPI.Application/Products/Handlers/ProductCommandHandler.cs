@@ -1,8 +1,8 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
 using DemoProductsWebAPI.Application.Products.Commands;
-using DemoProductsWebAPI.Application.Interfaces;
-using DemoProductsWebAPI.Application.DTOs;
+using DemoProductsWebAPI.Common.Interfaces;
+using DemoProductsWebAPI.Common.DTOs;
 
 namespace DemoProductsWebAPI.Application.Products.Handlers
 {

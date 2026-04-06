@@ -1,5 +1,5 @@
 using MediatR;
-using DemoProductsWebAPI.Application.DTOs;
+using DemoProductsWebAPI.Common.DTOs;
 
 namespace DemoProductsWebAPI.Application.Products.Notifications
 {

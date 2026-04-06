@@ -1,7 +1,7 @@
 using MediatR;
-using DemoProductsWebAPI.Application.Interfaces;
+using DemoProductsWebAPI.Common.Interfaces;
 using DemoProductsWebAPI.Application.ProductCarts.Commands;
-using DemoProductsWebAPI.Application.DTOs;
+using DemoProductsWebAPI.Common.DTOs;
 
 namespace DemoProductsWebAPI.Application.ProductCarts.Handlers
 {

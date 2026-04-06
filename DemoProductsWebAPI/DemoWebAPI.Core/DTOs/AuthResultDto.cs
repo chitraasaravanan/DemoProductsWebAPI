@@ -1,4 +1,4 @@
-namespace DemoProductsWebAPI.Application.DTOs
+namespace DemoWebAPI.Core.DTOs
 {
     public class AuthResultDto
     {

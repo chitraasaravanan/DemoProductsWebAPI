@@ -1,8 +1,7 @@
 using AutoMapper;
+using DemoProductsWebAPI.Common.DTOs;
+using DemoProductsWebAPI.Common.Interfaces;
 using Microsoft.Extensions.Logging;
-using DemoProductsWebAPI.Application.DTOs;
-using DemoProductsWebAPI.Application.Interfaces;
-using DemoProductsWebAPI.Domain.Entities;
 
 namespace DemoProductsWebAPI.Application.Services
 {

@@ -1,6 +1,3 @@
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-
 namespace DemoProductsWebAPI.API.Extensions
 {
     public static class ServiceCollectionExtensions
@@ -20,7 +17,7 @@ namespace DemoProductsWebAPI.API.Extensions
             }
 
             // Register the infrastructure read service directly. Use output caching in the API layer for response caching.
-            services.AddScoped<Application.Interfaces.IProductReadService, Infrastructure.Data.Read.ProductReadService>();
+            services.AddScoped<Common.Interfaces.IProductReadService, Infrastructure.Data.Read.ProductReadService>();
 
             return services;
         }

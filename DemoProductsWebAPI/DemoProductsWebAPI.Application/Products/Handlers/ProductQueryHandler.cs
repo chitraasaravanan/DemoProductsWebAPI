@@ -1,7 +1,7 @@
 using MediatR;
 using DemoProductsWebAPI.Application.Products.Queries;
-using DemoProductsWebAPI.Application.Interfaces;
-using DemoProductsWebAPI.Application.DTOs;
+using DemoProductsWebAPI.Common.Interfaces;
+using DemoProductsWebAPI.Common.DTOs;
 
 namespace DemoProductsWebAPI.Application.Products.Handlers
 {

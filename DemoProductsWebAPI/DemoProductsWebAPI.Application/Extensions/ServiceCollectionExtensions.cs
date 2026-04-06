@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using DemoProductsWebAPI.Application.Interfaces;
+using DemoProductsWebAPI.Common.Interfaces;
 
 namespace DemoProductsWebAPI.Application.Extensions
 {

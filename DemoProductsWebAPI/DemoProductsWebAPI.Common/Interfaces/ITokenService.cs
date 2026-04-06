@@ -1,5 +1,3 @@
-using DemoProductsWebAPI.Application.DTOs;
-
 namespace DemoProductsWebAPI.Common.Interfaces
 {
     public interface ITokenService

@@ -1,18 +1,17 @@
 
-using Microsoft.EntityFrameworkCore;
-using DemoProductsWebAPI.Infrastructure.Data;
-using DemoProductsWebAPI.Application.Interfaces;
-using DemoProductsWebAPI.Application.Services;
-using DemoProductsWebAPI.Application.Extensions;
-using Serilog;
-using FluentValidation.AspNetCore;
-using MediatR;
-using System.Threading.RateLimiting;
-using DemoProductsWebAPI.API.Middleware;
 using DemoProductsWebAPI.API.Extensions;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using DemoProductsWebAPI.API.Middleware;
+using DemoProductsWebAPI.Application.Extensions;
+using DemoProductsWebAPI.Application.Services;
+using DemoProductsWebAPI.Common.Interfaces;
+using DemoWebAPI.Core.DTOs;
 using DemoWebAPI.Core.Extensions;
 using DemoWebAPI.Core.Http;
+using FluentValidation.AspNetCore;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Serilog;
+using System.Threading.RateLimiting;
 
 namespace DemoProductsWebAPI.API
 {
@@ -77,7 +76,7 @@ namespace DemoProductsWebAPI.API
                 options.RequireHttpsMetadata = true;
                 options.SaveToken = true;
                 // configure TokenValidationParameters from settings
-                var jwt = builder.Configuration.GetSection("Jwt").Get<Application.DTOs.JwtSettings>();
+                var jwt = builder.Configuration.GetSection("Jwt").Get<JwtSettings>();
                 if (jwt != null)
                 {
                     options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
@@ -154,13 +153,13 @@ namespace DemoProductsWebAPI.API
             builder.Services.AddScoped<IProductCartService, ProductCartService>();
             // Register read-optimized services used by query handlers
             // We rely on output caching in the API layer rather than an application-level cached read service.
-            builder.Services.AddScoped<DemoProductsWebAPI.Application.Interfaces.IProductReadService, DemoProductsWebAPI.Infrastructure.Data.Read.ProductReadService>();
+            builder.Services.AddScoped<DemoProductsWebAPI.Common.Interfaces.IProductReadService, DemoProductsWebAPI.Infrastructure.Data.Read.ProductReadService>();
 
             // Token service with IOptions
-            builder.Services.AddScoped<Application.Interfaces.ITokenService, Infrastructure.Services.TokenService>();
+            builder.Services.AddScoped<Common.Interfaces.ITokenService, Infrastructure.Services.TokenService>();
 
             // Bind Jwt settings
-            builder.Services.Configure<Application.DTOs.JwtSettings>(builder.Configuration.GetSection("Jwt"));
+            builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
 
             // Dapper-based read services (optimized queries) are registered in Application layer when required.
 

@@ -1,7 +1,7 @@
 using MediatR;
 using DemoProductsWebAPI.Application.Auth.Commands;
-using DemoProductsWebAPI.Application.DTOs;
-using DemoProductsWebAPI.Application.Interfaces;
+using DemoProductsWebAPI.Common.Interfaces;
+using DemoWebAPI.Core.DTOs;
 
 namespace DemoProductsWebAPI.Application.Auth.Handlers
 {
