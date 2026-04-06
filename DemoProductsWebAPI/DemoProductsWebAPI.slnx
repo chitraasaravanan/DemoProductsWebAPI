@@ -1,0 +1,23 @@
+<Solution>
+  <Folder Name="/00 Core/">
+    <Project Path="DemoWebAPI.Core/DemoWebAPI.Core.csproj" />
+  </Folder>
+  <Folder Name="/01 Domain/">
+    <Project Path="DemoProductsWebAPI.Domain/DemoProductsWebAPI.Domain.csproj" />
+  </Folder>
+  <Folder Name="/02 Common/">
+    <Project Path="DemoProductsWebAPI.Common/DemoProductsWebAPI.Common.csproj" Id="336f5483-c428-459f-901f-8bfc65da5294" />
+  </Folder>
+  <Folder Name="/03 Infrastructure/">
+    <Project Path="DemoProductsWebAPI.Infrastructure/DemoProductsWebAPI.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/04 Application/">
+    <Project Path="DemoProductsWebAPI.Application/DemoProductsWebAPI.Application.csproj" />
+  </Folder>
+  <Folder Name="/05 WebAPI/">
+    <Project Path="DemoProductsWebAPI.API/DemoProductsWebAPI.API.csproj" />
+  </Folder>
+  <Folder Name="/06 Test/">
+    <Project Path="DemoProductsWebAPI.Tests/DemoProductsWebAPI.Tests.csproj" Id="19f5b583-77e7-4408-aea6-c33d89a696e9" />
+  </Folder>
+</Solution>

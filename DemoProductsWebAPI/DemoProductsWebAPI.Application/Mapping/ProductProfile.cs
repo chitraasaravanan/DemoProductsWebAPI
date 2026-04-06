@@ -1,0 +1,20 @@
+using AutoMapper;
+using DemoProductsWebAPI.Application.DTOs;
+using DemoProductsWebAPI.Domain.Entities;
+
+namespace DemoProductsWebAPI.Application.Mapping
+{
+    public class ProductProfile : Profile
+    {
+        public ProductProfile()
+        {
+            CreateMap<Product, ProductDto>()
+                .ForMember(d => d.ProductName, o => o.MapFrom(s => s.ProductName))
+                .ForMember(d => d.CreatedBy, o => o.MapFrom(s => s.CreatedBy))
+                .ForMember(d => d.CreatedOn, o => o.MapFrom(s => s.CreatedOn))
+                .ForMember(d => d.ModifiedBy, o => o.MapFrom(s => s.ModifiedBy))
+                .ForMember(d => d.ModifiedOn, o => o.MapFrom(s => s.ModifiedOn))
+                .ReverseMap();
+        }
+    }
+}

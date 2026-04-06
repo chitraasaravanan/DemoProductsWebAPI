@@ -52,3 +52,7 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+/.vs
+/DemoProductsWebAPI/.vs
+/DemoProductsWebAPI/DemoProductsWebAPI.API/.vs
+*.user

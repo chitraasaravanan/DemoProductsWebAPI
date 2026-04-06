@@ -1,0 +1,59 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>b4965cb1-0dc3-4a6f-b838-8f95722fbc8d</UserSecretsId>
+    <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
+    <DockerfileContext>.</DockerfileContext>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.14" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.23.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.10" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
+      <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
+      <PackageReference Include="Serilog.Settings.Configuration" Version="7.0.0" />
+      <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" />
+      <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.1" />
+      <PackageReference Include="Dapper" Version="2.0.123" />
+      <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.5" />
+      <PackageReference Include="MediatR" Version="10.0.1" />
+      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+      <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.0" />
+      <PackageReference Include="StackExchange.Redis" Version="2.8.0" />
+      <PackageReference Include="Polly" Version="8.2.0" />
+
+    <PackageReference Include="AutoMapper" Version="16.1.1" />
+  </ItemGroup>
+
+  <!-- Exclude sources from referenced projects to avoid duplicate compilation of the same files -->
+  <ItemGroup>
+    <Compile Remove="Application\**\*.cs" />
+    <Compile Remove="Domain\**\*.cs" />
+    <Compile Remove="Infrastructure\**\*.cs" />
+    <Compile Remove="tests\**" />
+    <Content Remove="tests\**" />
+    <EmbeddedResource Remove="tests\**" />
+    <None Remove="tests\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DemoProductsWebAPI.Application\DemoProductsWebAPI.Application.csproj" />
+    <ProjectReference Include="..\DemoProductsWebAPI.Domain\DemoProductsWebAPI.Domain.csproj" />
+    <ProjectReference Include="..\DemoProductsWebAPI.Infrastructure\DemoProductsWebAPI.Infrastructure.csproj" />
+    <ProjectReference Include="..\DemoWebAPI.Core\DemoWebAPI.Core.csproj" />
+  </ItemGroup>
+
+  <!-- Exclude source files that are compiled by the separate projects to avoid duplicate compile errors -->
+
+
+</Project>
