@@ -6,22 +6,17 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <!-- Modern API Versioning (replaces legacy Microsoft.AspNetCore.Mvc.Versioning) -->
     <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.1" />
-    <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.1" />
-
-    <!-- Dependency Injection & Configuration -->
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.5" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.5" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.5" />
+  </ItemGroup>
 
-    <!-- Resilience (Polly) -->
+  <ItemGroup>
     <PackageReference Include="Polly" Version="8.6.6" />
     <PackageReference Include="Polly.Extensions.Http" Version="3.0.0" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.9.1" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Repositories\DapperRepositories\" />
   </ItemGroup>
 
 </Project>

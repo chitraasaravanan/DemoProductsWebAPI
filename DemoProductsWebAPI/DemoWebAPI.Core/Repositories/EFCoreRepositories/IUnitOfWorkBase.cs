@@ -1,8 +1,4 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace DemoWebAPI.Core.Repositories
+namespace DemoWebAPI.Core.Repositories.EFCoreRepositories
 {
     /// <summary>
     /// Generic Unit of Work pattern for managing transaction boundaries and repository coordination.

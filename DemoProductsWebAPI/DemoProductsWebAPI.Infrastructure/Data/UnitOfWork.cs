@@ -1,5 +1,5 @@
 using DemoProductsWebAPI.Common.Interfaces;
-using DemoProductsWebAPI.Infrastructure.Data.Repositories;
+using DemoProductsWebAPI.Infrastructure.Data.EFCoreRepositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoProductsWebAPI.Infrastructure.Data
@@ -12,8 +12,8 @@ namespace DemoProductsWebAPI.Infrastructure.Data
         {
             _db = db;
             Products = new ProductRepository(_db);
-            RefreshTokens = new Repositories.RefreshTokenRepository(_db);
-            ProductCarts = new Repositories.ProductCartRepository(_db);
+            RefreshTokens = new RefreshTokenRepository(_db);
+            ProductCarts = new ProductCartRepository(_db);
         }
 
         public IProductRepository Products { get; }

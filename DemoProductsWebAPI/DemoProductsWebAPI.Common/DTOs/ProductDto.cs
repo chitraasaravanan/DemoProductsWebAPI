@@ -1,5 +1,3 @@
-using System;
-
 namespace DemoProductsWebAPI.Common.DTOs
 {
     public class ProductDto

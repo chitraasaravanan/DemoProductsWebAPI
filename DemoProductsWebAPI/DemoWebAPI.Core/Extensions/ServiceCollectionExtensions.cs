@@ -1,10 +1,8 @@
-using Microsoft.Extensions.DependencyInjection;
+using DemoWebAPI.Core.Http;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Polly;
 using Polly.Extensions.Http;
-using System.Net.Http;
-using System;
-using DemoWebAPI.Core.Http;
 
 namespace DemoWebAPI.Core.Extensions
 {

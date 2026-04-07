@@ -1,3 +1,6 @@
+using DemoProductsWebAPI.Common.Interfaces;
+using DemoProductsWebAPI.Infrastructure.Data.DapperRepositories;
+
 namespace DemoProductsWebAPI.API.Extensions
 {
     public static class ServiceCollectionExtensions
@@ -5,10 +8,10 @@ namespace DemoProductsWebAPI.API.Extensions
         public static IServiceCollection AddProductReadServices(this IServiceCollection services, IConfiguration configuration)
         {
             // Register connection factory
-            services.AddSingleton<Infrastructure.Data.Read.IDbConnectionFactory, Infrastructure.Data.Read.SqlConnectionFactory>();
+            services.AddSingleton<IDbConnectionFactory, SqlConnectionFactory>();
 
             // Dapper executor
-            services.AddSingleton<Infrastructure.Data.Read.IDapperExecutor, Infrastructure.Data.Read.DapperExecutor>();
+            services.AddSingleton<IDapperExecutor, DapperExecutor>();
 
             var redisConn = configuration.GetConnectionString("RedisConnection");
             if (!string.IsNullOrEmpty(redisConn))
@@ -17,7 +20,7 @@ namespace DemoProductsWebAPI.API.Extensions
             }
 
             // Register the infrastructure read service directly. Use output caching in the API layer for response caching.
-            services.AddScoped<Common.Interfaces.IProductReadService, Infrastructure.Data.Read.ProductReadService>();
+            services.AddScoped<IProductReadRepository, ProductReadRepository>();
 
             return services;
         }

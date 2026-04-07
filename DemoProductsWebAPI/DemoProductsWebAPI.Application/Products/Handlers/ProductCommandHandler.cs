@@ -1,28 +1,20 @@
+using DemoProductsWebAPI.Application.Products.Commands;
+using DemoProductsWebAPI.Common.DTOs;
+using DemoProductsWebAPI.Common.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using DemoProductsWebAPI.Application.Products.Commands;
-using DemoProductsWebAPI.Common.Interfaces;
-using DemoProductsWebAPI.Common.DTOs;
 
 namespace DemoProductsWebAPI.Application.Products.Handlers
 {
-    public class ProductCommandHandler :
+    public class ProductCommandHandler(IUnitOfWork uow, AutoMapper.IMapper mapper, ILogger<ProductCommandHandler> logger, MediatR.IMediator mediator) :
         IRequestHandler<CreateProductCommand, ProductDto>,
         IRequestHandler<UpdateProductCommand, bool>,
         IRequestHandler<DeleteProductCommand, bool>
     {
-        private readonly IUnitOfWork _uow;
-        private readonly AutoMapper.IMapper _mapper;
-        private readonly ILogger<ProductCommandHandler> _logger;
-        private readonly MediatR.IMediator _mediator;
-
-        public ProductCommandHandler(IUnitOfWork uow, AutoMapper.IMapper mapper, ILogger<ProductCommandHandler> logger, MediatR.IMediator mediator)
-        {
-            _uow = uow ?? throw new ArgumentNullException(nameof(uow));
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-        }
+        private readonly IUnitOfWork _uow = uow ?? throw new ArgumentNullException(nameof(uow));
+        private readonly AutoMapper.IMapper _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        private readonly ILogger<ProductCommandHandler> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        private readonly MediatR.IMediator _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
         public async Task<ProductDto> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {

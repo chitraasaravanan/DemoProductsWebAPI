@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
 using DemoProductsWebAPI.Common.DTOs;
-using DemoProductsWebAPI.Common.Interfaces;
+using DemoWebAPI.Core.Web;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DemoProductsWebAPI.API.Controllers
 {
@@ -31,6 +31,7 @@ namespace DemoProductsWebAPI.API.Controllers
         /// <param name="id">The product identifier.</param>
         /// <returns>200 OK with the product when found; 404 NotFound otherwise.</returns>
         [HttpGet("{id}")]
+        [Microsoft.AspNetCore.OutputCaching.OutputCache]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById(int id)

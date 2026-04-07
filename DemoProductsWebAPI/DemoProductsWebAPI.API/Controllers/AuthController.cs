@@ -1,9 +1,12 @@
-using Microsoft.AspNetCore.Mvc;
+using DemoWebAPI.Core.Web;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DemoProductsWebAPI.API.Controllers
 {
-    public class AuthController(IMediator mediator) : ControllerBase
+    [AllowAnonymous]
+    public class AuthController(IMediator mediator) : BaseController
     {
         private readonly IMediator _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 

@@ -1,5 +1,3 @@
-using System;
-
 namespace DemoWebAPI.Core.Models
 {
     public class ErrorResponse

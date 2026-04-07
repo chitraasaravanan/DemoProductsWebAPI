@@ -1,12 +1,10 @@
-using System;
-using System.Net;
-using System.Text.Json;
-using System.Threading.Tasks;
 using DemoWebAPI.Core.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using System.Net;
+using System.Text.Json;
 
-namespace DemoProductsWebAPI.API.Middleware
+namespace DemoWebAPI.Core.Web.Middleware
 {
     /// <summary>
     /// Global exception handling middleware that catches unhandled exceptions and returns standardized error responses.

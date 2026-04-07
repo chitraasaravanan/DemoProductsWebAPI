@@ -1,20 +1,15 @@
-using MediatR;
 using DemoProductsWebAPI.Application.Products.Queries;
-using DemoProductsWebAPI.Common.Interfaces;
 using DemoProductsWebAPI.Common.DTOs;
+using DemoProductsWebAPI.Common.Interfaces;
+using MediatR;
 
 namespace DemoProductsWebAPI.Application.Products.Handlers
 {
-    public class ProductQueryHandler : 
+    public class ProductQueryHandler(IProductReadRepository readService) :
         IRequestHandler<GetAllProductsQuery, IEnumerable<ProductDto>>,
         IRequestHandler<GetProductByIdQuery, ProductDto?>
     {
-        private readonly IProductReadService _readService;
-
-        public ProductQueryHandler(IProductReadService readService)
-        {
-            _readService = readService;
-        }
+        private readonly IProductReadRepository _readService = readService;
 
         public async Task<IEnumerable<ProductDto>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
         {

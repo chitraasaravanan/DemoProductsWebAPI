@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace DemoWebAPI.Core.Repositories
+namespace DemoWebAPI.Core.Repositories.EFCoreRepositories
 {
     /// <summary>
     /// Generic repository interface for common CRUD operations.

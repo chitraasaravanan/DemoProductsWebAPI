@@ -1,11 +1,10 @@
 using DemoProductsWebAPI.Common.Interfaces;
-using Microsoft.Extensions.Configuration;
+using DemoWebAPI.Core.DTOs;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using DemoWebAPI.Core.DTOs;
 
 namespace DemoProductsWebAPI.Infrastructure.Services
 {

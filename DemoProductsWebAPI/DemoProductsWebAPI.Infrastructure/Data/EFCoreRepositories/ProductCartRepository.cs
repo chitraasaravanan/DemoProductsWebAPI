@@ -2,7 +2,7 @@ using DemoProductsWebAPI.Common.Interfaces;
 using DemoProductsWebAPI.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace DemoProductsWebAPI.Infrastructure.Data.Repositories
+namespace DemoProductsWebAPI.Infrastructure.Data.EFCoreRepositories
 {
     public class ProductCartRepository(ApplicationDbContext db) : IProductCartRepository
     {
@@ -15,7 +15,7 @@ namespace DemoProductsWebAPI.Infrastructure.Data.Repositories
 
         public async Task<ProductCart?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
-            return await _db.Set<ProductCart>().FindAsync(new object[] { id }, cancellationToken);
+            return await _db.Set<ProductCart>().FindAsync([id], cancellationToken);
         }
 
         public async Task AddAsync(ProductCart item, CancellationToken cancellationToken = default)

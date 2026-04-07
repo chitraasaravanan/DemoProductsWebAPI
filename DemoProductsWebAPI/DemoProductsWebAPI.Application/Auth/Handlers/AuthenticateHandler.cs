@@ -1,20 +1,14 @@
-using MediatR;
 using DemoProductsWebAPI.Application.Auth.Commands;
 using DemoProductsWebAPI.Common.Interfaces;
 using DemoWebAPI.Core.DTOs;
+using MediatR;
 
 namespace DemoProductsWebAPI.Application.Auth.Handlers
 {
-    public class AuthenticateHandler : IRequestHandler<AuthenticateCommand, AuthResultDto>
+    public class AuthenticateHandler(ITokenService tokens, IUnitOfWork uow) : IRequestHandler<AuthenticateCommand, AuthResultDto>
     {
-        private readonly ITokenService _tokens;
-        private readonly IUnitOfWork _uow;
-
-        public AuthenticateHandler(ITokenService tokens, IUnitOfWork uow)
-        {
-            _tokens = tokens ?? throw new ArgumentNullException(nameof(tokens));
-            _uow = uow ?? throw new ArgumentNullException(nameof(uow));
-        }
+        private readonly ITokenService _tokens = tokens ?? throw new ArgumentNullException(nameof(tokens));
+        private readonly IUnitOfWork _uow = uow ?? throw new ArgumentNullException(nameof(uow));
 
         public async Task<AuthResultDto> Handle(AuthenticateCommand request, CancellationToken cancellationToken)
         {

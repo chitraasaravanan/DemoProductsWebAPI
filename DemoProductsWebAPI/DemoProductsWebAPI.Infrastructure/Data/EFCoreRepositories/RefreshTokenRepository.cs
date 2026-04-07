@@ -2,7 +2,7 @@ using DemoProductsWebAPI.Common.Interfaces;
 using DemoProductsWebAPI.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace DemoProductsWebAPI.Infrastructure.Data.Repositories
+namespace DemoProductsWebAPI.Infrastructure.Data.EFCoreRepositories
 {
     public class RefreshTokenRepository : IRefreshTokenRepository
     {

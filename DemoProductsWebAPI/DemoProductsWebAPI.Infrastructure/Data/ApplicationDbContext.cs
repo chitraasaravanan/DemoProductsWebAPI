@@ -1,16 +1,13 @@
-using Microsoft.EntityFrameworkCore;
 using DemoProductsWebAPI.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace DemoProductsWebAPI.Infrastructure.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
-        {
-        }
 
         public DbSet<Product> Products { get; set; } = null!;
-        public DbSet<DemoProductsWebAPI.Domain.Entities.ProductCart> ProductCarts { get; set; } = null!;
+        public DbSet<ProductCart> ProductCarts { get; set; } = null!;
         public DbSet<RefreshToken> RefreshTokens { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
