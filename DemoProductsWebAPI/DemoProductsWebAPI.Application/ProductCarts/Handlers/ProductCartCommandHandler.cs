@@ -1,21 +1,16 @@
-using MediatR;
-using DemoProductsWebAPI.Common.Interfaces;
 using DemoProductsWebAPI.Application.ProductCarts.Commands;
 using DemoProductsWebAPI.Common.DTOs;
+using DemoProductsWebAPI.Common.Interfaces;
+using MediatR;
 
 namespace DemoProductsWebAPI.Application.ProductCarts.Handlers
 {
-    public class ProductCartCommandHandler :
+    public class ProductCartCommandHandler(IProductCartService service) :
         IRequestHandler<CreateProductCartCommand, ProductCartDto>,
         IRequestHandler<UpdateProductCartCommand, bool>,
         IRequestHandler<DeleteProductCartCommand, bool>
     {
-        private readonly IProductCartService _service;
-
-        public ProductCartCommandHandler(IProductCartService service)
-        {
-            _service = service ?? throw new ArgumentNullException(nameof(service));
-        }
+        private readonly IProductCartService _service = service ?? throw new ArgumentNullException(nameof(service));
 
         public async Task<ProductCartDto> Handle(CreateProductCartCommand request, CancellationToken cancellationToken)
         {

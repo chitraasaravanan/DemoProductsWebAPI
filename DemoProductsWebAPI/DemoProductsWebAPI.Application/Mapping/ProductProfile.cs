@@ -1,5 +1,4 @@
 using AutoMapper;
-using DemoProductsWebAPI.Common.DTOs;
 using DemoProductsWebAPI.Domain.Entities;
 
 namespace DemoProductsWebAPI.Application.Mapping

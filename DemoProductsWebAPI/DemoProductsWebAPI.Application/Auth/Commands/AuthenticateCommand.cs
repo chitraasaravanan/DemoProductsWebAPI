@@ -1,5 +1,5 @@
-using MediatR;
 using DemoWebAPI.Core.DTOs;
+using MediatR;
 
 namespace DemoProductsWebAPI.Application.Auth.Commands
 {

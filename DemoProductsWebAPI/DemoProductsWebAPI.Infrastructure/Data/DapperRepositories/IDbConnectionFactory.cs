@@ -1,6 +1,6 @@
 using System.Data;
 
-namespace DemoProductsWebAPI.Infrastructure.Data.Read
+namespace DemoProductsWebAPI.Infrastructure.Data.DapperRepositories
 {
     public interface IDbConnectionFactory
     {

@@ -1,7 +1,8 @@
+using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DemoProductsWebAPI.API.Controllers
+namespace DemoWebAPI.Core.Web
 {
     [Authorize]
     [ApiController]

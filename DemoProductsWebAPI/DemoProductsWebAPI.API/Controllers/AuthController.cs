@@ -1,16 +1,15 @@
+using DemoWebAPI.Core.Web;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DemoProductsWebAPI.API.Controllers
-{    
-    public class AuthController(MediatR.IMediator mediator) : ControllerBase
+{
+    [AllowAnonymous]
+    public class AuthController(IMediator mediator) : BaseController
     {
-        private readonly MediatR.IMediator _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+        private readonly IMediator _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
-        /// <summary>
-        /// Authenticates a user and returns access and refresh tokens.
-        /// </summary>
-        /// <param name="req">Login credentials.</param>
-        /// <returns>200 OK with access and refresh tokens.</returns>
         /// <summary>
         /// Authenticates a user and returns access and refresh tokens.
         /// </summary>
@@ -28,11 +27,6 @@ namespace DemoProductsWebAPI.API.Controllers
         /// </summary>
         /// <param name="req">Refresh request containing the refresh token.</param>
         /// <returns>200 OK with new tokens, or 401 Unauthorized if token is invalid.</returns>
-        /// <summary>
-        /// Exchanges a valid refresh token for a new access token and refresh token.
-        /// </summary>
-        /// <param name="req">Refresh request containing the refresh token.</param>
-        /// <returns>200 OK with new tokens, or 401 Unauthorized if token is invalid.</returns>
         [HttpPost("refresh")]
         public async Task<IActionResult> Refresh([FromBody] RefreshRequest req)
         {
@@ -43,11 +37,6 @@ namespace DemoProductsWebAPI.API.Controllers
             return Ok(new { access_token = result.AccessToken, refresh_token = result.RefreshToken });
         }
 
-        /// <summary>
-        /// Revokes a refresh token so it can no longer be used.
-        /// </summary>
-        /// <param name="req">Revoke request containing the refresh token to revoke.</param>
-        /// <returns>204 NoContent on success.</returns>
         /// <summary>
         /// Revokes a refresh token so it can no longer be used.
         /// </summary>

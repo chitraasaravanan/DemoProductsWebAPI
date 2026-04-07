@@ -1,7 +1,5 @@
 using Polly;
 using Polly.Extensions.Http;
-using System;
-using System.Net.Http;
 
 namespace DemoWebAPI.Core.Policies
 {

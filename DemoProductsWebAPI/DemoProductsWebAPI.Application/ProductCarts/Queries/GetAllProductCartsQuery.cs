@@ -1,6 +1,5 @@
-using MediatR;
 using DemoProductsWebAPI.Common.DTOs;
-using System.Collections.Generic;
+using MediatR;
 
 namespace DemoProductsWebAPI.Application.ProductCarts.Queries
 {

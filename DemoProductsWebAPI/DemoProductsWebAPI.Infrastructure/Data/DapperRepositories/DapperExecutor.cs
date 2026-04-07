@@ -1,28 +1,25 @@
 using Dapper;
-using Polly;
-using Polly.Retry;
-using Polly.CircuitBreaker;
-using System.Data;
 using Microsoft.Extensions.Logging;
+using Polly;
+using Polly.CircuitBreaker;
+using Polly.Retry;
+using System.Data;
 
-namespace DemoProductsWebAPI.Infrastructure.Data.Read
+namespace DemoProductsWebAPI.Infrastructure.Data.DapperRepositories
 {
-    public class DapperExecutor : IDapperExecutor
+    public class DapperExecutor(ILogger<DapperExecutor> logger) : IDapperExecutor
     {
-        private readonly ILogger<DapperExecutor> _logger;
-        private readonly AsyncRetryPolicy _retryPolicy;
-
-        private readonly AsyncCircuitBreakerPolicy _circuitBreaker;
+        private readonly ILogger<DapperExecutor> _logger = logger;
+        private readonly AsyncRetryPolicy _retryPolicy = InitRetryPolicy(logger);
+        private readonly AsyncCircuitBreakerPolicy _circuitBreaker = InitCircuitBreaker(logger);
         private static readonly System.Diagnostics.Metrics.Meter _meter = new("DemoProductsWebAPI.DapperExecutor", "1.0");
         private static readonly System.Diagnostics.Metrics.Counter<long> _retryCounter = _meter.CreateCounter<long>("dapper_retries");
         private static readonly System.Diagnostics.Metrics.Counter<long> _circuitOpenCounter = _meter.CreateCounter<long>("dapper_circuit_open");
 
-        public DapperExecutor(ILogger<DapperExecutor> logger)
+        private static AsyncRetryPolicy InitRetryPolicy(ILogger<DapperExecutor> logger)
         {
-            _logger = logger;
-            // Exponential backoff with jitter
             var jitter = new Random();
-            _retryPolicy = Policy.Handle<Exception>()
+            return Policy.Handle<Exception>()
                 .WaitAndRetryAsync(3, retryAttempt =>
                 {
                     var baseDelay = TimeSpan.FromMilliseconds(200 * Math.Pow(2, retryAttempt - 1));
@@ -30,16 +27,19 @@ namespace DemoProductsWebAPI.Infrastructure.Data.Read
                     return baseDelay + jitterDelay;
                 }, (ex, span, attempt, context) =>
                 {
-                    _logger.LogWarning(ex, "Transient error during Dapper operation, attempt {Attempt} will retry after {Delay}", attempt, span);
+                    logger.LogWarning(ex, "Transient error during Dapper operation, attempt {Attempt} will retry after {Delay}", attempt, span);
                     _retryCounter.Add(1);
                 });
+        }
 
-            _circuitBreaker = Policy.Handle<Exception>()
+        private static AsyncCircuitBreakerPolicy InitCircuitBreaker(ILogger<DapperExecutor> logger)
+        {
+            return Policy.Handle<Exception>()
                 .CircuitBreakerAsync(5, TimeSpan.FromSeconds(30), onBreak: (ex, ts) =>
                 {
-                    _logger.LogWarning(ex, "Circuit breaker opened for {TimeSpan}", ts);
+                    logger.LogWarning(ex, "Circuit breaker opened for {TimeSpan}", ts);
                     _circuitOpenCounter.Add(1);
-                }, onReset: () => _logger.LogInformation("Circuit breaker reset"));
+                }, onReset: () => logger.LogInformation("Circuit breaker reset"));
         }
 
         public async Task<IEnumerable<T>> QueryAsync<T>(IDbConnection connection, CommandDefinition command)
@@ -52,7 +52,7 @@ namespace DemoProductsWebAPI.Infrastructure.Data.Read
                     await dbConn.OpenAsync(ct);
 
                 return await connection.QueryAsync<T>(command);
-            }, token == default ? System.Threading.CancellationToken.None : token));
+            }, token == default ? CancellationToken.None : token));
         }
 
         public async Task<T?> QuerySingleOrDefaultAsync<T>(IDbConnection connection, CommandDefinition command)
@@ -64,7 +64,7 @@ namespace DemoProductsWebAPI.Infrastructure.Data.Read
                     await dbConn.OpenAsync(ct);
 
                 return await connection.QuerySingleOrDefaultAsync<T>(command);
-            }, token == default ? System.Threading.CancellationToken.None : token));
+            }, token == default ? CancellationToken.None : token));
         }
     }
 }

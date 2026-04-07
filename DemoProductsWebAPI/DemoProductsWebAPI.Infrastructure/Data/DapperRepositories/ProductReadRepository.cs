@@ -4,12 +4,12 @@ using DemoProductsWebAPI.Common.Interfaces;
 using Microsoft.Extensions.Logging;
 using System.Data;
 
-namespace DemoProductsWebAPI.Infrastructure.Data.Read
+namespace DemoProductsWebAPI.Infrastructure.Data.DapperRepositories
 {
-    public class ProductReadService(IDbConnectionFactory factory, ILogger<ProductReadService> logger, IDapperExecutor executor) : IProductReadService
+    public class ProductReadRepository(IDbConnectionFactory factory, ILogger<ProductReadRepository> logger, IDapperExecutor executor) : IProductReadRepository
     {
         private readonly IDbConnectionFactory _factory = factory;
-        private readonly ILogger<ProductReadService> _logger = logger;
+        private readonly ILogger<ProductReadRepository> _logger = logger;
         private readonly IDapperExecutor _executor = executor;
 
         /// <summary>

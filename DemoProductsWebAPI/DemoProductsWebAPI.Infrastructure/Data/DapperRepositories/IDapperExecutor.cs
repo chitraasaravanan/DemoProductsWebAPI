@@ -1,9 +1,7 @@
 using Dapper;
 using System.Data;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
-namespace DemoProductsWebAPI.Infrastructure.Data.Read
+namespace DemoProductsWebAPI.Infrastructure.Data.DapperRepositories
 {
     public interface IDapperExecutor
     {

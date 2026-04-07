@@ -1,14 +1,13 @@
 
+using Asp.Versioning;
 using DemoProductsWebAPI.API.Extensions;
-using DemoProductsWebAPI.API.Middleware;
 using DemoProductsWebAPI.Application.Extensions;
-using DemoProductsWebAPI.Application.Services;
-using DemoProductsWebAPI.Common.Interfaces;
 using DemoProductsWebAPI.Infrastructure.Data;
 using DemoProductsWebAPI.Infrastructure.Extensions;
 using DemoWebAPI.Core.DTOs;
 using DemoWebAPI.Core.Extensions;
 using DemoWebAPI.Core.Http;
+using DemoWebAPI.Core.Web.Middleware;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -34,7 +33,11 @@ namespace DemoProductsWebAPI.API
 
             // Add services to the container.
             builder.Services.AddControllers();
-            // OpenAPI / Swagger (lightweight minimal setup)
+
+            // OpenAPI / Swagger with JWT Bearer and OAuth2 authentication support
+            // - JWT Bearer: Allows manual token entry in Swagger UI
+            // - OAuth2: Supports interactive authentication flows (implicit and authorization code)
+            // Flow: User can authenticate via OAuth2 button in Swagger UI to obtain access tokens
             builder.Services.AddSwaggerGenWithJwt();
 
             // DbContext - prefer SQL Server (LocalDB). Fall back to InMemory if not configured.
@@ -44,14 +47,20 @@ namespace DemoProductsWebAPI.API
                 // Use DbContext pooling for better performance under high throughput
                 builder.Services.AddDbContextPool<ApplicationDbContext>(options =>
                     options.UseSqlServer(conn, sqlOptions => sqlOptions.CommandTimeout(30))
-                           .UseQueryTrackingBehavior(Microsoft.EntityFrameworkCore.QueryTrackingBehavior.NoTracking),
+                           .UseQueryTrackingBehavior(Microsoft.EntityFrameworkCore.QueryTrackingBehavior.NoTracking)
+                           .ConfigureWarnings(w =>
+                               w.Ignore(Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.PendingModelChangesWarning)
+                           ),
                     poolSize: 128);
             }
             else
             {
                 builder.Services.AddDbContextPool<ApplicationDbContext>(options =>
                     options.UseInMemoryDatabase("DemoProductsDb")
-                           .UseQueryTrackingBehavior(Microsoft.EntityFrameworkCore.QueryTrackingBehavior.NoTracking),
+                           .UseQueryTrackingBehavior(Microsoft.EntityFrameworkCore.QueryTrackingBehavior.NoTracking)
+                           .ConfigureWarnings(w =>
+                               w.Ignore(Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.PendingModelChangesWarning)
+                           ),
                     poolSize: 8);
             }
 
@@ -92,7 +101,7 @@ namespace DemoProductsWebAPI.API
             });
 
             // Repositories & Unit of Work - register infrastructure services
-            builder.Services.AddInfrastructureServices(builder.Configuration);
+            builder.Services.AddInfrastructureServices();
 
             // Register application services
             builder.Services.AddApplicationServices(builder.Configuration);
@@ -107,7 +116,16 @@ namespace DemoProductsWebAPI.API
             // Response caching (output caching alternative)
             builder.Services.AddResponseCaching();
             // Output caching (new in ASP.NET Core) - used by [OutputCache] attribute on controllers
-            builder.Services.AddOutputCache();
+            // Configure default output cache duration to 5 minutes for all cached endpoints
+            builder.Services.AddOutputCache(options =>
+            {
+                // Default cache policy: 5-minute duration for all GET requests with [OutputCache] attribute
+                options.DefaultExpirationTimeSpan = TimeSpan.FromMinutes(5);
+
+                // Add named policies for different cache durations if needed
+                // Example: options.AddPolicy("ShortCache", builder => builder.Expire(TimeSpan.FromSeconds(30)));
+                // Example: options.AddPolicy("LongCache", builder => builder.Expire(TimeSpan.FromMinutes(30)));
+            });
 
             // Rate limiting (per IP fixed window)
             builder.Services.AddRateLimiter(options =>
@@ -132,10 +150,10 @@ namespace DemoProductsWebAPI.API
             builder.Services.AddApiVersioning(options =>
             {
                 options.AssumeDefaultVersionWhenUnspecified = true;
-                options.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+                options.DefaultApiVersion = new ApiVersion(1, 0);
                 options.ReportApiVersions = true;
-            });
-            builder.Services.AddVersionedApiExplorer(options =>
+            })
+            .AddApiExplorer(options =>
             {
                 options.GroupNameFormat = "'v'VVV";
                 options.SubstituteApiVersionInUrl = true;
